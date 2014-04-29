@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.1'
 gem 'rails', '4.1.0.rc1'
-gem 'sqlite3'
+
 gem "bower-rails", "~> 0.7.1"
 gem 'sass-rails', '~> 4.0.1'
 gem 'uglifier', '>= 1.3.0'
@@ -20,6 +20,7 @@ gem 'rb-readline', "~> 0.5.0.pre.1", :require => false
 gem 'will_paginate', '~> 3.0'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 group :development do
+  gem 'sqlite3'
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'quiet_assets'
