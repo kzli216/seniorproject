@@ -1,0 +1,12 @@
+<%= form_for [@goal, @record]  do |f| %>
+
+	<%= f.hidden_field :phase_id, :value => @phase.id %>
+
+	<div><%= f.label :date %>
+		<%= f.date_select :date %></div>
+	<div><%= f.label :score %>
+		<%= f.number_field :score %></div>
+	<div><%= f.label :easiness %>
+		<%= f.number_field :easiness %></div>
+	<%= f.submit "Add Daily Score", :class => 'btn btn-small btn-success' %>
+<% end %>

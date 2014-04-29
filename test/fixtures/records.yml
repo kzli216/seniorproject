@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 1
+  phase_id: 1
+  easiness: 1
+
+two:
+  score: 1
+  phase_id: 1
+  easiness: 1

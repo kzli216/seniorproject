@@ -1,0 +1,1 @@
+class Run < Goal; end

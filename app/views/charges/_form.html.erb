@@ -1,0 +1,27 @@
+</br>
+<%= form_tag charges_path do %>
+	<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+
+	<%= link_to 'No Thanks', inactive_goal_path(@goal), :class=>'btn-default btn' %>
+	<button id="customButton" class="btn-lg btn-primary" style="float:right;">Make a $50 Commitment</button></br></br></br>
+
+	<script>
+	    $('#customButton').click(function(){
+	    	var token = function(res){
+	        var $input = $('<input type=hidden name=stripeToken />').val(res.id);
+	        $('form').append($input).submit();
+	      	};
+
+	    	StripeCheckout.open({
+		        key:         "<%= Rails.configuration.stripe[:publishable_key] %>",
+		        amount:      5000,
+		        currency:    'usd',
+		        panelLabel:  'Checkout',
+		        token:       token
+	      	});
+
+	      	return false;
+	    });
+  	</script>
+<% end %>

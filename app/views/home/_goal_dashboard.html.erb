@@ -1,0 +1,18 @@
+<%= stylesheet_link_tag "custom" %>
+
+<div class="container" %>
+	<div class="col-lg-8">
+		<h1 style="text-align: center; font-size: 3m;"> Goals Dashboard </h1>
+		<hr class="section-heading-spacer">
+	</div>
+	<div class="col-lg-3" style="float: right;">
+		<h2 style="text-align: center; font-size: 3m;">Activity Feed</h2>
+		<%= render 'home/feed' %>
+	</div>
+	<% current_user.goals.sort_by(&:most_recent_update).reverse.each do |goal| %>
+       <div class="col-lg-8">
+	        <%= render 'goals', :goal => goal %>
+            <hr class="section-heading-spacer">
+       </div>
+	<% end %>
+</div>

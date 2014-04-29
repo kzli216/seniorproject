@@ -1,0 +1,7 @@
+<% if @feed_items.any? %>
+	<div class="row">
+	<%= will_paginate(@feed_items) %>
+		<%= render partial: 'home/feed_item', collection: @feed_items %>
+		<%= will_paginate(@feed_items) %>
+	</div>
+<% end %>

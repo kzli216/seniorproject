@@ -1,0 +1,43 @@
+<div class="container">
+	<h1>All Current Goals</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Type of Goal</th>
+				<th>Amount Per Day</th>
+				<th>User</th>
+				<th>Baseline</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>Phase #</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+			<% @goals.each do |goal| %>
+				<td><%= goal.id %></td>			
+				<td><%= goal.type %></td>
+				<td><%= goal.target %>	<%= goal.measure %></td>
+				<td><%= link_to "#{goal.user.email}", goal.user %></td>
+				<td><%= goal.starting %> </td>
+				<% if @type == "Goal" %>				
+						<td><%= link_to 'Show', goal %></td>
+						<td><%= link_to 'Edit', edit_goal_path(goal) %></td>
+						<td><%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<% else %>
+						<td><%= link_to 'Show', sti_goal_path(goal.type, goal) %></td>
+						<td><%= link_to 'Edit', sti_goal_path(goal.type, goal, :edit) %></td>
+						<td><%= link_to 'Destroy', sti_goal_path(goal.type, goal), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<% end %>
+				<td><%= goal.phases.count %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% if @type != "Goal" %>
+		<%= link_to "New #{@type}", sti_goal_path(@type, nil, :new) %>
+		<%= link_to 'See all goals', sti_goal_path %>
+	<% end %>
+</div>

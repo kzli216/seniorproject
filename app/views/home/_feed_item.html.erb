@@ -1,0 +1,66 @@
+<div class="row">
+	<li id="<%= feed_item.id %>">
+
+	<% @phase = Phase.find(feed_item.phase_id) %>
+	<% @goal = Goal.find(@phase.goal_id) %>
+	<% @user = User.find(@goal.user_id) %>
+	<% if @phase.baseline == false %>
+	<%= link_to gravatar_for(@goal.user), @goal.user %>
+	
+	<span class="user">
+		<% if @goal.type == "Yoga" %>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of doing yoga for <%= @phase.subgoal %> minutes and did	<%= feed_item.score %> minutes!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of doing yoga for <%= feed_item.score %> minutes! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of <%= @phase.subgoal %> minutes and only did <%= feed_item.score %> minutes of yoga.
+			<% end %>
+		<% elsif @goal.type == "Water" %>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of <%= @phase.subgoal %> ounces and drank	<%= feed_item.score %> ounces of water!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of drinking <%= feed_item.score %> ounces of water! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of drinking <%= @phase.subgoal %> ounces of water and only drank <%= feed_item.score %> ounces.
+			<% end %>
+		<% elsif @goal.type == "Journal" %>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of journaling for <%= @phase.subgoal %> minutes and journaled for	<%= feed_item.score %> minutes!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of journaling for <%= feed_item.score %> minutes! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of journaling for <%= @phase.subgoal %> minutes and only did <%= feed_item.score %> minutes.
+			<% end %>
+		<% elsif @goal.type == "Run" %>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of running for <%= @phase.subgoal %> minutes and ran for	<%= feed_item.score %> minutes!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of running for <%= feed_item.score %> minutes! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of running for <%= @phase.subgoal %> minutes and only did <%= feed_item.score %> minutes.
+			<% end %>
+		<% elsif @goal.type == "Exercise" %>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of exercising for <%= @phase.subgoal %> minutes and exercised for	<%= feed_item.score %> minutes!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of exercising for <%= feed_item.score %> minutes! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of exercising for <%= @phase.subgoal %> minutes and only did <%= feed_item.score %> minutes.
+			<% end %>
+		<% elsif @goal.type == "Meditate"	%>
+			<% if feed_item.score > @phase.subgoal %>
+				<%= link_to @user.name, @user %> surpassed the target of meditating for <%= @phase.subgoal %> minutes and meditated for	<%= feed_item.score %> minutes!
+			<% elsif feed_item.score == @phase.subgoal %>
+				<%= link_to @user.name, @user %> reached the goal of meditating for <%= feed_item.score %> minutes! 
+			<% else %>
+				<%= link_to @user.name, @user %> did not reach the target of meditating for <%= @phase.subgoal %> minutes and only did <%= feed_item.score %> minutes.
+			<% end %>
+		<% end %>
+	<span class="timestamp", style = "float: right;">
+		<%= time_ago_in_words(feed_item.created_at) %> ago.
+		</br>
+	</span>
+<% end %>
+</li>
+</div>

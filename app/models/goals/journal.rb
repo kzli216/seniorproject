@@ -1,0 +1,1 @@
+class Journal < Goal; end

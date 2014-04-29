@@ -27,15 +27,26 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: ENV["DOMAIN_NAME"],
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
-  }
+config.action_mailer.delivery_method = :smtp
+#config.action_mailer.smtp_settings = {
+#  :address              => "smtp.gmail.com",
+#  :port                 => 587,
+#  :domain               => 'gmail.com',
+#  :user_name            => 'yaleseniorproject@gmail.com',
+#  :password             => 'metamorphosis',
+#  :authentication       => 'plain',
+#  :enable_starttls_auto => true
+#  }
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :authentication => :plain,
+  :address => "smtp.mailgun.org",
+  :port => 587,
+  :domain => "sandboxf4fc822baeef40578f6173a9f427611c.mailgun.org",
+  :user_name => "postmaster@sandboxf4fc822baeef40578f6173a9f427611c.mailgun.org",
+  :password => "509i37toyiq3"
+}
   # ActionMailer Config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp

@@ -1,0 +1,10 @@
+<% if goal.type == "Water" %>
+	<h2><%=link_to "You set a goal to drink #{goal.target} ounces of water a day.", goal_path(goal) %><h2>
+	<h3>Your current subgoal is <%=goal.phases.most_recent.subgoal %> ounces a day</h3>
+<% elsif goal.type == "Yoga" %>
+	<h2><%=link_to "You set a goal to do yoga for #{goal.target} minutes a day.", goal_path(goal) %><h2>
+	<h3>Your current subgoal is <%=goal.phases.most_recent.subgoal %> minutes</h3>
+<% else %>
+	<h2><%=link_to "You set a goal to #{goal.type.downcase} for #{goal.target} minutes a day.", goal_path(goal) %><h2>
+	<h3>Your current subgoal is <%=goal.phases.most_recent.subgoal %> minutes</h3>
+<% end %>

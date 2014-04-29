@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subgoal: 
+  baseline: false
+  goal_id: 
+
+two:
+  subgoal: 
+  baseline: false
+  goal_id: 

@@ -33,16 +33,26 @@ img {
 // apply styles to HTML elements
 // to make views framework-neutral
 main {
-  @extend .container;
-  background-color: #eee;
   padding-bottom: 80px;
   width: 100%;
   margin-top: 51px; // accommodate the navbar
   }
+
 section {
   @extend .row;
   margin-top: 20px;
   }
+
+.section-heading-spacer {
+  border-top: 3px solid #e7e7e7;
+  width: 100%;
+  float: left;
+}
+
+.jumbotron {
+  padding-left: 0% ;
+  padding-right: 0% ;
+}
 
 // Styles for Devise views
 // using Bootstrap
@@ -67,6 +77,38 @@ section {
 .authform fieldset {
   @extend .well;
 }
+
+.goalform {
+  padding-top: 30px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+.goalform form {
+  @extend .well;
+  @extend .well-lg;
+  padding-bottom: 40px;
+}
+.goalform .right {
+  float: right !important;
+}
+
+.goalform .button {
+  @extend .btn;
+  @extend .btn-primary;
+}
+.goalform fieldset {
+  @extend .well;
+}
+
+.goalform h2 {
+  text-align:center
+}
+
+.progress-bar {
+
+  background-color: #25D500;  
+}
+
 #error_explanation {
   @extend .alert;
   @extend .alert-danger;

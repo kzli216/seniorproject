@@ -1,0 +1,54 @@
+<div class="goalform wide">
+<%= form_for(@record) do |f| %>
+	<h2>Add New Daily Score</h2>
+	<% if @record.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@record.errors.count, "error") %> prohibited this from from being saved:</h2>
+
+			<ul>
+			<% @record.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<div class="field">
+		<%= f.label :date %><br>
+		<%= f.date_select :date %>
+	</div> 
+	<div class="field">
+		<%= f.label :score %><br>
+		<%= f.number_field :score, :required => true %>
+	</div>
+	<div class="field">
+		<%= f.hidden_field :phase_id, :value => @phase.id %>
+		<%= f.hidden_field :sub_goal, :value => Phase.find(@phase.id).subgoal %>
+	</div>
+	<div class="field">
+		<b>How easy was the task to perform?</b> <br>
+		<div style="text-align: center">
+			<%= f.radio_button :easiness, '1' %> 
+			<%= label :easiness_email, '1 (Difficult)' %>
+			<%= f.radio_button :easiness, '2' %>
+			<%= label :easiness_sms, '2' %>
+			<%= f.radio_button :easiness, '3' %>
+			<%= label :easiness_sms, '3' %>
+			<%= f.radio_button :easiness, '4', :checked => true %>
+			<%= label :easiness_sms, '4' %>
+			<%= f.radio_button :easiness, '5' %>
+			<%= label :easiness_sms, '5' %>
+			<%= f.radio_button :easiness, '6' %>
+			<%= label :easiness_sms, '6' %>
+			<%= f.radio_button :easiness, '7' %>
+			<%= label :easiness_sms, '7 (Easy)' %>
+		</div>
+	</div>
+		<div class="actions">
+			<%= link_to 'Back', goal_path(@goal), :class =>'button-xs' %>
+			<%= f.submit 'Add Daily Score', :class => 'button-xs right' %>
+		</div>
+<% end %>
+</div>
+
+
+

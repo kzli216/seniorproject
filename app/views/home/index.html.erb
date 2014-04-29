@@ -1,1 +1,9 @@
-<h3>Home</h3>
+<% if !user_signed_in? %>
+		<%= render 'new_user' %>
+<% else %>
+		<% if current_user.goals.count > 0 %> 
+				<%= render 'goal_dashboard' %>
+		<% else %>
+		<%= render 'new_user' %>
+		<% end %>
+<% end %>

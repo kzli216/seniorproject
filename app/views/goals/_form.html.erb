@@ -1,0 +1,106 @@
+<div class="goalform wide">
+	<%= form_for(@goal) do |f| %>
+		<% if @goal.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= pluralize(@goal.errors.count, "error") %> prohibited this from from being saved:</h2>
+				<ul>
+				<% @goal.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<% if @type != "Goal" %>
+				<%= f.hidden_field :type, :value => @type %>
+				<%= f.hidden_field :measure, :value => @measure %>
+				<%= f.hidden_field :money_earned, :value => 0 %>
+		<% end %>
+
+		<% if @type == "Water" %>
+			<h2>Let's Drink More Water!</h2><br>
+
+			<div class="form-group" style="text-align: center">
+				<%= f.label "Target:" %>:
+				<%= f.select :target, Goal.water_ounces_options.map {|r| [r.humanize, r.camelcase]} %>
+				ounces/day
+				<%= f.hidden_field :starting, :value => false %>
+			</div>
+
+<!--
+				<div class="form-group" >
+					<%= f.label " " %>
+					<%= f.select :measure, Goal.water_measures.map {|r| [r.humanize, r.camelcase]} %>
+					<%= f.hidden_field :measure, :value => "Ounces" %>
+				</div>
+-->
+		<% end %>
+
+
+		<% if @type == "Yoga" %>
+			<h2>Let's Do Yoga!</h2><br>
+
+			<div class="form-group">
+				<%= f.label :target %>:
+				<%= f.select :target, Goal.minutes_options.map {|r| [r.humanize, r.camelcase]} %>
+				minutes/day
+			</div>
+		<% end %>
+
+		<% if @type == "Exercise"%>
+			<h2>Let's Exercise!</h2><br>
+
+			<div class="form-group" >
+				<%= f.label :target %>:
+				<%= f.select :target, Goal.minutes_options.map {|r| [r.humanize, r.camelcase]} %>
+				minutes/day
+			</div>
+		<% end %>	 
+
+		<% if @type == "Journal" %>
+			<h2>Let's Journal!</h2><br>
+
+			<div class="form-group" >
+				<%= f.label :target %>:
+				<%= f.select :target, Goal.minutes_options.map {|r| [r.humanize, r.camelcase]} %>
+				minutes/day
+			</div>
+		<% end %>		 
+
+		<% if @type == "Run" %>
+			<h2>Let's Run!</h2><br>
+
+			<div class="form-group" style="text-align: center">
+				<%= f.label :target %>
+				<%= f.select :target, Goal.minutes_options.map {|r| [r.humanize, r.camelcase]} %>
+				minutes/day
+			</div>
+		<% end %>
+
+		 <% if @type == "Meditate" %>
+			<h2>Let's Meditate!</h2><br>
+
+			<div class="form-group" style="text-align: center">
+				<%= f.label :target %>
+				<%= f.select :target, Goal.minutes_options.map {|r| [r.humanize, r.camelcase]} %>
+				minutes/day
+			</div>
+		<% end %>
+
+		<div class="form-group">
+			<%= f.label :starting do %>
+				<%= f.check_box :starting %> I am starting a new behavior
+			<% end %>
+		</div>
+
+		<br>
+		<div class="actions">
+			<%= link_to 'Back', sti_goal_path(@type), :class =>'button-xs' %>
+			<%= f.submit 'Create Goal', :class => 'button-xs right' %>
+		</div>
+	<% end %>
+	</div>
+</div>
+
+
+

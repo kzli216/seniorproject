@@ -1,2 +1,39 @@
-<h3>User</h3>
-<p>Email: <%= @user.email if @user.email %></p>
+<% provide(:title, @user.name) %>
+<div class="container", style="text-align:center"	>
+	<%= gravatar_for @user %>
+	<h1> <%= @user.email %>	</h1>
+	<%= render 'follow_form' %>
+</div>
+<div class="container">
+	<% if @user.goals.count == 0 %>
+	<h2>No Current Goals </h2>
+	<% else %>
+	<h2>Current Goals</h2>
+	<table class="table">
+	<thead>
+		<tr>
+		<th>ID</th>
+		<th>Type of Goal</th>
+		<th>Amount Per Day</th>
+		<th>User</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+		<% @user.goals.each do |goal| %>
+		<td><%= goal.id %></td>		
+		<td><%= goal.type %></td>
+		<td><%= goal.target %>	<%= goal.measure %></td>
+		<td><%= goal.user.email %></td>		 
+		<td><%= link_to 'Show', goal %></td>
+		<td><%= link_to 'Edit', edit_goal_path(goal) %></td>
+		<td><%= link_to 'Destroy', goal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
+	<% end %>
+</div>
