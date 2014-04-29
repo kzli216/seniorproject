@@ -1,7 +1,25 @@
+<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.9.3/typeahead.min.js" %>
+
+</br></br>
 <div class="container">
 	<div class="row">
+		<%= form_tag users_path, class: "form-inline", method: :get do %>
+			<div class="input-group input-group-lg" >
+				<% if params[:query].present? %>
+				  	<div class="input-group-btn">
+				    	<%= link_to "clear", users_path, class: "btn btn-default" %>
+				 	</div>
+				<% end %>
+		 		<%= text_field_tag :query, params[:query], class: "form-control", id: "user_search", autocomplete: "off" %>
+				<div class="input-group-btn">
+					<%= submit_tag "Search", class: "btn btn-primary" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+	<div class="row">
 		<h3>Users</h3>
-		<div class="column">
+
 			<table class="table">
 				<tbody>
 					<% @users.each do |user| %>
@@ -9,8 +27,19 @@
 							<%= render user %>
 						</tr>
 					<% end %>
+					<%= will_paginate(@users) %>
 				</tbody>
 			</table>
-		</div>
+
 	</div>
 </div>
+
+
+<script>
+	$(function() {
+	  return $('#user_search').typeahead({
+	    name: "user",
+	    remote: "/users/autocomplete?query=%QUERY"
+	  });
+	});
+</script>

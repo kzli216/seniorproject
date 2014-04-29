@@ -3,6 +3,9 @@ Seniorproject::Application.routes.draw do
 
 	devise_for :users, :controllers => {:registrations => "registrations"}
 	resources :users do
+		collection do
+			get :autocomplete
+		end
 		member do
 			get :following, :followers
 		end

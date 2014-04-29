@@ -1,9 +1,17 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!
-	after_action :verify_authorized, except: [:show, :following, :followers, :index]
+	after_action :verify_authorized, except: [:show, :following, :followers, :index, :autocomplete]
 
-	def index
-		@users = User.all
+  	def index
+	    if params[:query].present?
+	      @users = User.search(params[:query], page: params[:page])
+	    else
+	      @users = User.all.paginate(page: params[:page])
+	    end
+  	end
+
+  	def autocomplete
+    	render json: User.search(params[:query], autocomplete: true, limit: 10).map(&:email)
 	end
 
 	def show
@@ -55,5 +63,4 @@ class UsersController < ApplicationController
 	def secure_params
 		params.require(:user).permit(:role)
 	end
-
 end
