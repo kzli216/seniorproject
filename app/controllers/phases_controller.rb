@@ -15,7 +15,6 @@ class PhasesController < ApplicationController
 
 	def create
 		@goal = Goal.find(params[:id])
-
 		@phase = @goal.build(phase_params)
 
 		if @phase.save

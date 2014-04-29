@@ -41,7 +41,7 @@ class RecordsController < ApplicationController
 				goal_id = Goal.find(Phase.find(@record.phase_id).goal_id)
 				@goal_id = Goal.find(goal_id)
 				ModelMailer.new_record_notification(@record).deliver
-				format.html { redirect_to '/', notice: 'Record was successfully created.' }
+				format.html { redirect_to session.delete(:return_to), notice: 'Record was successfully created.' }
 				format.json { render action: 'show', status: :created, location: @record }
 			else
 				format.html { redirect_to :back }
