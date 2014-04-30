@@ -1,0 +1,21 @@
+<div class="container">
+	<%= render 'goal_title' %>
+
+	<%= render 'commitment_contract' %>
+
+	<% @goal_user = User.find(@goal.user_id) %>
+
+	<% if current_user == @goal_user %>
+		<% if @goal.type == "Yoga" %>
+			<h2 style="text-align:center; font-size: 2em">Let us know how much yoga you do already!</h1><br>
+		<% elsif @goal.type == "Journal" || @goal.type == "Exercise" || @goal.type == "Run" || @goal.type == "Meditate"%>
+			<h1 style="text-align:center; font-size: 2em">Let us know how much you <%=@goal.type.downcase%> already!</h1><br>
+		<% else %> <!--(@goal.type == "Water") -->
+			<h1 style="text-align:center; font-size: 2em">Let us know how much water you drink already!</h1><br>
+		<% end %>
+		<%= link_to	"Add Baseline Score", new_goal_record_path(@goal),	:class =>'btn-primary btn-lg center', :style =>'margin-left: 40%'	%>
+	<% else %>
+		<h2> It looks like <%= @goal_user.name %> hasn't added any scores yet </h2>
+	<% end %>
+
+</div>

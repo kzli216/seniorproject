@@ -1,0 +1,17 @@
+	<% if current_user == User.find(@goal.user_id) %>
+		<% if @goal.type == "Yoga" %>
+			<h1 style="text-align:center; font-size: 3em">I set a goal to do yoga for <%=@goal.target%> <%=@goal.measure %> a day!</h1><br>
+		<% elsif @goal.type == "Journal" || @goal.type == "Exercise" || @goal.type == "Run" || @goal.type == "Meditate"%>
+			<h1 style="text-align:center; font-size: 3em">I set a goal to <%=@goal.type.downcase%> for <%=@goal.target%> <%=@goal.measure %> a day!</h1><br>
+		<% else %> <!--(@goal.type == "Water") -->
+			<h1 style="text-align:center; font-size: 3em">I set a goal to drink <%=@goal.target%> <%=@goal.measure %> of water a day!</h1><br>
+		<% end %>
+	<% else %>
+		<% if @goal.type == "Yoga" %>
+			<h1 style="text-align:center; font-size: 3em"> <%= User.find(@goal.user_id).name %> set a goal to do yoga for <%=@goal.target%> <%=@goal.measure %> a day!</h1><br>
+		<% elsif @goal.type == "Journal" || @goal.type == "Exercise" || @goal.type == "Run" || @goal.type == "Meditate"%>
+			<h1 style="text-align:center; font-size: 3em"> <%= User.find(@goal.user_id).name %> set a goal to <%=@goal.type.downcase%> for <%=@goal.target%> <%=@goal.measure %> a day!</h1><br>
+		<% else %> <!--(@goal.type == "Water") -->
+			<h1 style="text-align:center; font-size: 3em"> <%= User.find(@goal.user_id).name %> set a goal to drink <%=@goal.target%> <%=@goal.measure %> of water a day!</h1><br>
+		<% end %>	
+	<% end %>

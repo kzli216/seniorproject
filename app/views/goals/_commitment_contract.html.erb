@@ -1,0 +1,30 @@
+<% progress_width = @goal.money_earned*100 / @goal.contract_amount%>
+
+<% if @goal.commitment_contract == nil && current_user == User.find(@goal.user_id) %>
+	<h3>Set Aside $50 For When You Reach Your Goal </h3>
+	<p class="lead">Committing money can help motivate you to reach your goal. If you decide to pay, we'll charge your credit card $50. When you successfully complete your goal, the charge will be refunded. Each day, you can earn a little bit more of your money back. </p>
+	
+	<div class="row">
+		<div class="col-lg-4">
+			<%= image_tag "half.png", alt: "Running" %>
+			<p>Earn half a percent of your $50 every time you submit a daily score, and earn another half if you reached your daily target. Reaching your target is important, but to build habits, doing a little each day is key. </p>
+		</div><!-- /.col-lg-4 -->
+		<div class="col-lg-4">
+			<%= image_tag "one.png", alt: "Drink More Water" %>
+			<p>Consistency is important, so we reward every three consecutive days of input with an extra 1% of your $50. Over time, increasing the amount of doing an activity is a lot easier when you're used to doing it.</p>
+		</div><!-- /.col-lg-4 -->
+		<div class="col-lg-4">
+			<%= image_tag "five.png", alt: "Do Yoga" %>
+			<p>Every seven scores is set aside as a phase, which no matter what, gets you 5% closer to earning your money back. At the end of a phase, you'll also gain a bonus related to how far you are from your final goal.</p>
+		</div><!-- /.col-lg-4 -->
+	</div><!-- /.row -->
+   <%= render 'charges/form' %>
+<% elsif @goal.commitment_contract == true %>
+	<% if progress_width != 0 %>
+	    <div class="progress progress-striped active">
+		   <div class="progress-bar"	role="progressbar success" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="<%= progress_width.to_s.prepend("width: ") + '%'-%>">
+			<%=progress_width%>%
+			</div>	
+		</div>
+	<% end %>
+<% end %>

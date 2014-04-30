@@ -1,0 +1,178 @@
+<div class="container">
+
+	<% @goal_user = User.find(@goal.user_id) %>
+
+	<%= render 'goal_title' %>
+	<%= render 'commitment_contract' %>
+
+	<% if @goal.records.count > 0 %>
+    	<h1>Goal Scores</h1>
+    		<% if current_user == @goal_user %>
+    			<% if @goal.phases.count > 1 %>
+    				<%= link_to	"New Daily Score", new_goal_record_path(@goal),	:class =>'btn-primary btn-sm'	%>
+				<% else %>
+					<%= link_to	"Add Baseline Score", new_goal_record_path(@goal),	:class =>'btn-primary btn-sm'	%>
+				<% end %>
+			<% end %>
+    	<div id="chartdiv" style="width: 100%; height: 400px;"></div>
+	<% end %>
+
+	<% if current_user == @goal_user %>
+		<% if @goal.phases.count > 1 %>
+			<%= link_to	"New Daily Score", new_goal_record_path(@goal),	:class =>'btn-primary btn-sm'	%>
+		<% else %>
+			<%= link_to	"Add Baseline Score", new_goal_record_path(@goal),	:class =>'btn-primary btn-sm'	%>
+		<% end %>
+	<% end %>
+
+	<% if @goal.records.count > 0 %>
+		<h1>Phases</h1>
+		<table class="table table-striped">
+		<thead>
+			<th># of scores </th>
+			<th>Subgoal</th>
+			<th>Average Score </th>
+			<th>Average Easiness </th>
+		</thead>
+		<tbody>
+
+			<% @goal.phases.reverse.each do |phase| %>
+			<td><%= phase.records.count %></td>
+			<td><%= phase.subgoal %></td>
+			<% if phase.records.count != 0 %>
+				<td><%= phase.records.sum(:score)/phase.records.count %></td>
+				<td><%= phase.records.sum(:easiness)/phase.records.count %></td>
+			<% else %>
+				<td> 0 </td>
+				<td> 0 </td>
+			<% end %>
+			</tr>
+			<% end %>
+		</tbody>
+		</table>
+	<% end %>
+</div>
+
+<script type="text/javascript">
+	 var chart;
+	 var chartData = <%= convert_to_amcharts_json(@records) %>
+
+	 AmCharts.ready(function () {
+		 // SERIAL CHART
+		 chart = new AmCharts.AmSerialChart();
+		 chart.dataProvider = chartData;
+		 chart.pathToImages = "http://www.amcharts.com/lib/images/";
+		 chart.handDrawn = true;
+		 chart.dataDateFormat = "YYYY-MM-DD";
+
+	
+		 // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+
+		 // AXES
+		 // category
+		 chart.categoryField = "date";
+		 var categoryAxis = chart.categoryAxis;
+		 categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+		 categoryAxis.minorGridEnabled = true;
+		 categoryAxis.startOnAxis = false;
+		 categoryAxis.axisColor = "#DADADA";
+		 categoryAxis.gridAlpha = 0.1;
+		 categoryAxis.minorGridAlpha = 0.1;
+		 categoryAxis.axisAlpha = 0;
+		 categoryAxis.equalSpacing = true;
+
+
+		 // Easiness Axis
+		 var valueAxis1 = new AmCharts.ValueAxis();
+		 valueAxis1.axisColor = "9076B3";
+		 valueAxis1.axisThickness = 1;
+		 valueAxis1.maximum = 7;
+		 valueAxis1.minimum = 1;
+		 valueAxis1.gridAlpha = 0;
+		 valueAxis1.position = "right";
+		 chart.addValueAxis(valueAxis1);
+
+		 // third value axis (on the left, detached)
+		 var valueAxis2 = new AmCharts.ValueAxis();
+		 valueAxis2.axisThickness = 2;
+		 valueAxis2.gridAlpha = 0;
+		 chart.addValueAxis(valueAxis2);
+
+		 // GRAPHS
+		 var graph1 = new AmCharts.AmGraph();
+		 graph1.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+		 graph1.title = "Daily Score";
+		 graph1.type = "column";
+		 graph1.fillAlphas = 1;
+		 graph1.fillColorsField = "color"
+		 graph1.balloonText = "Daily Score: [[score]]"
+		 graph1.valueField = "score";
+		 graph1.lineColorField = "color";
+		 graph1.bullet = "triangleDown";
+		 graph1.lineColor = "#25D500";
+		 graph1.lineThickness = 2;
+		 graph1.bulletBorderThickness = 4;
+		 chart.addGraph(graph1);
+
+		 var graph2 = new AmCharts.AmGraph();
+		 graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+		 graph2.valueField = "sub_goal";
+		 graph2.type = "step";
+		 graph2.title = "Sub Goal";
+		 graph2.balloonText = "Sub Goal: [[sub_goal]]";
+		 graph2.lineColor = "#3399FF";
+		 graph2.dashLength = 1;
+		 graph2.lineThickness = 2;
+		 graph2.noStepRisers = true;
+		 chart.addGraph(graph2);
+
+		 var graph4 = new AmCharts.AmGraph();
+		 graph4.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+		 graph4.title = "Easiness";
+		 graph4.valueField = "easiness";
+		 graph4.lineColor = "#9076B3";
+		 graph4.balloonText = "Easiness: [[easiness]]";
+		 graph4.bullet = "square";
+		 graph4.bulletBorderThickness = 1;
+		 graph4.lineThickness = 2;
+		 graph4.hidden = true;
+		 chart.addGraph(graph4);
+
+		 var guide = new AmCharts.Guide();
+		 guide.value = <%= "#{@goal.target}" %>;
+		 guide.lineColor = "#25D500";
+		 guide.label = "Goal Target";
+		 guide.balloonText = "Goal Target";
+		 guide.inside = true;
+		 guide.lineAlpha = 1;
+		 valueAxis2.addGuide(guide);
+
+		 // SCROLLBAR
+		 var chartScrollbar = new AmCharts.ChartScrollbar();
+		 chart.addChartScrollbar(chartScrollbar);
+
+		 // CURSOR
+		 var chartCursor = new AmCharts.ChartCursor();
+		 chartCursor.cursorAlpha = 0.1;
+		 chartCursor.fullWidth = true;
+		 chart.addChartCursor(chartCursor);
+
+		 // LEGEND
+		 var legend = new AmCharts.AmLegend();
+		 legend.marginLeft = 110;
+		 legend.useGraphSettings = true;
+		 chart.addLegend(legend);
+
+
+		 // WRITE
+		 chart.write("chartdiv");
+
+		chart.addListener("rendered", zoomChart);
+
+		zoomChart();
+		function zoomChart(){
+			chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+		}
+		 }
+	 );
+</script>
