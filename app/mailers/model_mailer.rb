@@ -1,5 +1,5 @@
 class ModelMailer < ActionMailer::Base
-  default from: "Kevin@metamorphosis.com"
+  default from: "admin@metamorphosis.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -12,6 +12,6 @@ class ModelMailer < ActionMailer::Base
       @goal = Goal.find(@phase.goal_id)
       @user = User.find(@goal.user_id)
 
-      mail to: @user.email, subject: "Success! You did it!"
+      mail to: @user.email, subject: "Don't Break The Streak!"
     end
 end
