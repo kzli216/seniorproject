@@ -7,6 +7,5 @@ class CreateAdminService
         user.name = "Kevin Li"
         user.confirm!
         user.admin!
-      end
   end
 end
