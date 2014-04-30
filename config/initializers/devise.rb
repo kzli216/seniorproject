@@ -22,6 +22,7 @@ Devise.setup do |config|
   require 'devise/orm/active_record'
 
   config.secret_key = '17c7175f1a01d743f68c2add1850e998115e78fb1843cc8ce3992d19a7c578b7d14c964087468dd6328bf392fdbe2722b994164959fbe9007cb10873c6ccb958'
+  config.assets.initialize_on_precompile = false
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
