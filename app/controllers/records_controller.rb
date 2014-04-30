@@ -39,7 +39,7 @@ class RecordsController < ApplicationController
 
 		respond_to do |format|
 			if @record.save
-				ModelMailer.delay(run_at: 23.hours.from_now).new_record_notification(@record)
+				ModelMailer.delay(run_at: 2.minutes.from_now).new_record_notification(@record)
 				format.html { redirect_to session.delete(:return_to), notice: 'Record was successfully created.' }
 				format.json { render action: 'show', status: :created, location: @goal }
 			else
