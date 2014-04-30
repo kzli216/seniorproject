@@ -38,11 +38,8 @@ class RecordsController < ApplicationController
 		@goal = Goal.find(@phase.goal_id)
 
 		respond_to do |format|
-
 			if @record.save
-				goal_id = Goal.find(Phase.find(@record.phase_id).goal_id)
-				@goal_id = Goal.find(goal_id)
-				ModelMailer.delay(run_at: 2.minutes.from_now).new_record_notification(@record)
+				ModelMailer.delay(run_at: 23.hours.from_now).new_record_notification(@record)
 				format.html { redirect_to session.delete(:return_to), notice: 'Record was successfully created.' }
 				format.json { render action: 'show', status: :created, location: @goal }
 			else
