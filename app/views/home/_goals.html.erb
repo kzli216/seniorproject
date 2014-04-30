@@ -13,15 +13,15 @@
       <% end %>
     <% end %>
 <% else %>
-    <% if @goal.type == "Yoga" %>
+    <% if goal.type == "Yoga" %>
         <h3 style="text-align: center">Let us know how much yoga you do already!</h3>
-    <% elsif @goal.type == "Journal" || @goal.type == "Exercise" || @goal.type == "Run" || @goal.type == "Meditate"%>
-        <h3>Let us know how much you <%=@goal.type.downcase%> already!</h3><br>
-    <% else %> <!--(@goal.type == "Water") -->
+    <% elsif goal.type == "Journal" || goal.type == "Exercise" || goal.type == "Run" || goal.type == "Meditate"%>
+        <h3>Let us know how much you <%=goal.type.downcase%> already!</h3><br>
+    <% else %> <!--(goal.type == "Water") -->
         <h3>Let us know how much water you drink already!</h3><br>
     <% end %>
     </br>
-    <%= link_to "Add Baseline Score", new_goal_record_path(@goal), :class =>'btn-primary btn-lg center', :style =>'margin-left: 40%' %></br></br>
+    <%= link_to "Add Baseline Score", new_goal_record_path(goal), :class =>'btn-primary btn-lg center', :style =>'margin-left: 40%' %></br></br>
 <% end %>
 
 <script type="text/javascript">
