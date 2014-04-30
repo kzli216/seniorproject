@@ -1,5 +1,5 @@
 class GoalsController < ApplicationController
-        before_filter :authenticate_user!
+    before_filter :authenticate_user!
     before_action :set_goal, only: [:show, :edit, :update, :destroy]
     before_action :set_type
     before_action :set_measure

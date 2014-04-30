@@ -19,6 +19,8 @@ gem "font-awesome-rails"
 gem 'rb-readline', "~> 0.5.0.pre.1", :require => false
 gem 'will_paginate', '~> 3.0'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'delayed_job_active_record'
+gem 'daemon-spawn'
 group :development do
   gem 'sqlite3'
   gem 'better_errors'

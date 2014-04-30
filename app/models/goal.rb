@@ -27,8 +27,12 @@ class Goal < ActiveRecord::Base
 		end
 	end
 
-	def most_recent_update 
-		self.records.last.created_at
+	def most_recent_update
+		if self.records.count > 0
+			self.records.last.created_at
+		else
+			self.created_at
+		end
 	end
 
 #		if @goal.starting == true

@@ -101,6 +101,28 @@ class Record < ActiveRecord::Base
 			if self.score >= @phase.subgoal
 				@goal.money_earned = @goal.money_earned + (@goal.contract_amount / 200)
 			end
+			
+			if @goal.records.count > 0
+				@last_record = @goal.records[-2] #the last record before the one we're making
+
+				if @goal.records.count == 1
+					time_since_last_record = self.date - @goal.records.most_recent.date
+				else
+					time_since_last_record = @goal.records.most_recent.date - @last_record.date
+				end
+				
+				if time_since_last_record.to_i == 1
+					@goal.consecutive = @goal.consecutive + 1
+					if @goal.consecutive > 2
+						@goal.money_earned = @goal.money_earned + (@goal.contract_amount / 100)
+					end
+				else 
+					@goal.consecutive = 1
+				end
+			else
+				@goal.consecutive = 1
+			end
+
 			@goal.save
 		end
 	end
